@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Consultar Vehiculo</title>
+</head>
+<body onload="mostrarVehiculoPlaca()">
+    <div>
+        <form class="containerConsulta">
+            Buscar por placa: <input type="text" name="buscarPlaca" id="mi_buscarPlaca"> 
+            Buscar por No. Serie <input type="text" name="buscarSerie" id="mi_buscarSerie">
+            <div>
+                <input type="submit" class="button" value="Buscar por placa" onclick="mostrarVehiculoPlaca()">
+                <input type="submit" class="button" value="Buscar por no. serie" onclick="borrarVehiculo2()">
+                <input type="button" class="button" name="botonRegresar" value="Regresar" onclick="location.href='index.html'" >
+            </div>            
+        </form>
+        <!-- Lugar en la pagina Web dinde se colocara la tabla con los datos de la BD  --> 
+        <div id="txtHint" class="centrardiv"><b>[ La informacion de los vehiculos se mostrara aqui ]</b></div>
+
+         <!-- Incluye libreria para jquery--> 
+	<script src="./JQuery-3.6.3/jquery-3.6.3.min.js" type="text/javascript"></script>
+
+    <!-- Incluye Mi libreria -->
+    <script type="text/javascript" src="js/scriptIndex.js"></script>
+        
+    </div>
+   
+</body>
+</html>
