@@ -9,6 +9,7 @@ router.post('/login', loginController.auth);
 router.get('/register', loginController.register);
 router.post('/register', loginController.storeUser);
 router.get('/logout', loginController.logout);
+router.get('/consulta', loginController.consulta);
 
 
 
