@@ -47,10 +47,6 @@ function storeUser(req,res){
     const data = req.body;
 
     req.getConnection((err,conn) =>{
-        conn.query('SELECT * FROM usuarios WHERE correo = ?', [data.correo], (err,userdata) =>{
-            if(userdata.length > 0){                
-                res.render('login/register', {error: 'Error: ya existe u usuario con ese correo'});
-            }else{
                 bcrypt.hash(data.password, 12).then(hash => {
                     data.password = hash;
                     console.log(data);
@@ -61,8 +57,8 @@ function storeUser(req,res){
                         });
                     });
                 });
-            }
-        });
+            
+        
     });
 
     
@@ -75,10 +71,15 @@ function logout(req,res) {
     res.redirect('/login');
 }
 
+function consulta(req,res) {
+    res.redirect('/consulta');
+}
+
 module.exports = {
     login,
     register,
     storeUser,
     auth,
     logout,
+    consulta,
 }
