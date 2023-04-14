@@ -121,9 +121,8 @@ function mostrarTabla(req, res, next) {
           } else {
             res.render("login/consulta", { page_title: "Users - Node.js", data: rows });
           }
-        }
-      );
-  });
+        });
+    });
     
 }
 
