@@ -110,17 +110,21 @@ function mostrar(req, res) {
 
 /* GET home page. */
 function mostrarTabla(req, res, next) {
-  connection.query(
-    "SELECT * FROM users ORDER BY id desc",
-    function (err, rows) {
-      if (err) {
-        req.flash("error", err);
-        res.render("list", { page_title: "Users - Node.js", data: "" });
-      } else {
-        res.render("list", { page_title: "Users - Node.js", data: rows });
-      }
-    }
-  );
+  
+  req.getConnection((err,conn) =>{
+    conn.query(
+        "SELECT * FROM vehiculos ORDER BY id asc",
+         (err, rows) => {
+          if (err) {
+            req.flash("error", err);
+            res.render("list", { page_title: "Users - Node.js", data: "" });
+          } else {
+            res.render("login/consulta", { page_title: "Users - Node.js", data: rows });
+          }
+        }
+      );
+  });
+    
 }
 
 module.exports = {
