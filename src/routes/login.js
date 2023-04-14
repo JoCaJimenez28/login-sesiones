@@ -14,5 +14,6 @@ router.get("/consulta", loginController.consulta);
 router.get("/mostrar", loginController.mostrar);
 router.post("/consulta", loginController.mostrarTabla);
 router.post("/", loginController.insertarVehiculo);
+router.put("/edit", loginController.editarVehiculo);
 
 module.exports = router;
