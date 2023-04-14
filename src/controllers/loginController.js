@@ -137,6 +137,15 @@ function editarVehiculo(req, res) {
   });
 }
 
+function borrarVehiculo(req, res) {
+  const { id } = req.query;
+  req.getConnection((err, conn) => {
+    conn.query(`DELETE FROM vehiculos WHERE id= ${id}`, (err, rows) => {
+      res.redirect("/");
+    });
+  });
+}
+
 module.exports = {
   login,
   register,
@@ -149,4 +158,5 @@ module.exports = {
   insertarVehiculo,
   consultarVehiculos,
   editarVehiculo,
+  borrarVehiculo,
 };
