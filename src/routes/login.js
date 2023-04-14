@@ -15,5 +15,6 @@ router.get("/mostrar", loginController.mostrar);
 router.post("/consulta", loginController.mostrarTabla);
 router.post("/", loginController.insertarVehiculo);
 router.put("/edit", loginController.editarVehiculo);
+router.delete("/borrar", loginController.borrarVehiculo);
 
 module.exports = router;
