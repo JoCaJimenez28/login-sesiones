@@ -127,6 +127,20 @@ function mostrarTabla(req, res, next) {
     
 }
 
+function editarVehiculo(req, res) {
+  const data = req.body;
+
+  req.getConnection((err, conn) => {
+    conn.query(
+      `UPDATE vehiculos SET ? WHERE id= ${data.id}`,
+      [data],
+      (err, rows) => {
+        res.redirect("/");
+      }
+    );
+  });
+}
+
 module.exports = {
   login,
   register,
@@ -138,4 +152,5 @@ module.exports = {
   mostrarTabla,
   insertarVehiculo,
   consultarVehiculos,
+  editarVehiculo,
 };
