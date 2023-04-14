@@ -14,17 +14,23 @@ function auth(req,res) {
     
     req.getConnection((err,conn) =>{
         conn.query('SELECT * FROM usuarios WHERE correo = ?', [data.correo], (err,userdata) =>{
-            if(userdata.length > 0){                
+            if(userdata.length > 0){  
+                console.log(userdata);              
                 userdata.forEach(element => {
                     bcrypt.compare(data.password, element.password, (err, isMatch) => {
 
                     if(!isMatch) {
                         res.render('login/index', {error: 'Error: Contraseña incorrecta'});
-                    }else{
+                    }else if (element.tipoUsuario === 'Administrador') {
                         req.session.loggedin = true;
                         req.session.name = element.name;
 
                         res.redirect('/');
+                    } else {
+                        req.session.loggedin = true;
+                        req.session.name = element.name;
+
+                        res.render('login/consulta');
                     }
                 });
                     
@@ -43,25 +49,17 @@ function register(req, res) {
     }
 }
 
-function storeUser(req,res){
+function storeUser(req, res){
     const data = req.body;
-
-    req.getConnection((err,conn) =>{
-                bcrypt.hash(data.password, 12).then(hash => {
-                    data.password = hash;
-                    console.log(data);
-            
-                    req.getConnection((err,conn) => {
-                        conn.query('INSERT INTO usuarios SET ?', [data], (err, rows) => {
-                            res.redirect('/');
-                        });
-                    });
-                });
-            
-        
+    bcrypt.hash(data.password,12).then(hash =>{
+        data.password = hash;
+        console.log(data);
+        req.getConnection((err, conn)=>{
+            conn.query('INSERT INTO usuarios SET ?', [data], (err, rows) => {
+                res.redirect('/');
+            });
+        });
     });
-
-    
 }
 
 function logout(req,res) {
@@ -72,7 +70,41 @@ function logout(req,res) {
 }
 
 function consulta(req,res) {
-    res.redirect('/consulta');
+    if(req.session.loggedin != true){
+        res.render('login/index');
+    }else{
+        res.render('login/consulta');
+    }
+   
+}
+
+function insertarVehiculo(req,res) {
+    const data = req.body;
+    console.log(data);
+    
+    req.getConnection((err, conn)=>{
+        conn.query('INSERT INTO vehiculos SET ?', [data], (err, rows) => {
+            res.redirect('/');
+        });
+    });
+}
+
+function consultarVehiculos(req,res) {
+    const data = req.body;
+
+    req.getConnection((err, conn) =>{
+        conn.query('SELECT * FROM vehiculos', (err, userdata)=>{
+            console.log(userdata);
+            res.redirect('login/consulta');
+        });
+    });
+}
+
+function mostrar(req,res) {
+    // if(req.session.loggedin == true){
+        res.render('login/mostrar');
+    // }
+    // res.redirect('/login');
 }
 
 module.exports = {
@@ -82,4 +114,7 @@ module.exports = {
     auth,
     logout,
     consulta,
+    mostrar,
+    insertarVehiculo,
+    consultarVehiculos,
 }
