@@ -18,6 +18,8 @@ router.get("/mostrar", loginController.mostrar);
 router.get("/borrar", (req, res) => {
     const { id } = req.query;
     loginController.borrarVehiculo(req, res, id);
-  });
+});
+
+router.get('/nosotros', loginController.nosotros);
 
 module.exports = router;
