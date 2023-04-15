@@ -32,8 +32,19 @@ function auth(req, res) {
               } else {
                 req.session.loggedin = true;
                 req.session.name = element.name;
-
-                res.render("login/consulta");
+                req.getConnection((err,conn) =>{
+                    conn.query(
+                        "SELECT * FROM vehiculos ORDER BY id asc",
+                         (err, rows) => {
+                          if (err) {
+                            req.flash("error", err);
+                            res.render("list", { page_title: "Users - Node.js", data: "" });
+                          } else {
+                            console.log(rows);
+                            res.render("login/consultaUsuario", { table: true, data: rows });
+                          }
+                        });
+                    });
               }
             });
           });
@@ -75,7 +86,7 @@ function consulta(req, res) {
   if (req.session.loggedin != true) {
     res.render("login/index");
   } else {
-    res.render("login/consulta");
+    res.render("login/consulta", { table: true, data: "" });
   }
 }
 
@@ -119,7 +130,8 @@ function mostrarTabla(req, res, next) {
             req.flash("error", err);
             res.render("list", { page_title: "Users - Node.js", data: "" });
           } else {
-            res.render("login/consulta", { page_title: "Users - Node.js", data: rows });
+            console.log(rows);
+            res.render("login/consulta", { table: true, data: rows });
           }
         });
     });
@@ -140,11 +152,23 @@ function editarVehiculo(req, res) {
   });
 }
 
-function borrarVehiculo(req, res) {
-  const { id } = req.query;
+function borrarVehiculo(req, res, id) {
+
+  console.log('id: ', id);
   req.getConnection((err, conn) => {
     conn.query(`DELETE FROM vehiculos WHERE id= ${id}`, (err, rows) => {
-      res.redirect("/");
+        console.log(rows);
+        conn.query(
+            "SELECT * FROM vehiculos ORDER BY id asc",
+             (err, rows) => {
+              if (err) {
+                req.flash("error", err);
+                res.render("list", { page_title: "Users - Node.js", data: "" });
+              } else {
+                console.log(rows);
+                res.render("login/consulta", { table: true, data: rows });
+              }
+            });
     });
   });
 }

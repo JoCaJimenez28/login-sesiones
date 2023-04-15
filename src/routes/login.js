@@ -9,12 +9,15 @@ router.post("/login", loginController.auth);
 router.get("/register", loginController.register);
 router.post("/register", loginController.storeUser);
 router.get("/logout", loginController.logout);
-router.get("/consulta", loginController.consulta);
-//(router.post("/consulta", loginController.consultarVehiculos);
+router.get("/consulta", loginController.mostrarTabla);
 router.get("/mostrar", loginController.mostrar);
 router.post("/consulta", loginController.mostrarTabla);
 router.post("/", loginController.insertarVehiculo);
-router.put("/edit", loginController.editarVehiculo);
-router.delete("/borrar", loginController.borrarVehiculo);
+router.get("/mostrar", loginController.mostrar);
+
+router.get("/borrar", (req, res) => {
+    const { id } = req.query;
+    loginController.borrarVehiculo(req, res, id);
+  });
 
 module.exports = router;
