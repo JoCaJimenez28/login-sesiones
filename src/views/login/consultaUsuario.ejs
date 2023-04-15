@@ -15,15 +15,13 @@
 
                 <a href="/consulta" class="rounded-md bg-blue-500 w-full text-lg text-white
                     font-semibold p-2 my-3 hover:bg-blue-600 focus:bg-blue-700">Mostrar todos</a> -->
-                <a href="/" class="rounded-md bg-blue-500 w-full text-lg text-white
-                    font-semibold p-2 my-3 hover:bg-blue-600 focus:bg-blue-700">Regresar</a>
+                
             </div>            
         </form>
         <!-- Lugar en la pagina Web dinde se colocara la tabla con los datos de la BD  --> 
         <!-- div id="txtHint" class="centrardiv"><b>[ La informacion de los vehiculos se mostrara aqui ]</b></div --> 
         
         <div class="">
-          <form action="">
           <% 
             if(table != false){ %>              
               <table class="block mx-auto my-12  bg-white w-4/4 border  rounded-lg  text-gray-800 border-collapse">
@@ -51,11 +49,7 @@
                 <td><%= data[i].marca%></td>
                 <td><%= data[i].modelo%></td>
                 <td><%= data[i].versionModelo%></td>
-                <td><%= data[i].numeroSerie%></td>
-                <td>
-                <a class=" rounded-md text-lg text-blue
-                font-semibold p-2 my-3 hover:bg-blue-600 hover:text-white focus:bg-blue-700" href="/borrar?id=<%=data[i].id%>">Borrar</a>
-               </td>
+                <td><%= data[i].numeroSerie%></td>                
               </tr>
               <% }
             
@@ -71,9 +65,8 @@
             else{ %>
               <div id="txtHint"><b>[ La informacion de los vehiculos se mostrara aqui ]</b></div>
            <% } %>
-          </form>
         </div>
         
     </div>
    
-<%- include('../layouts/end.ejs') %>
+<%- include('../layouts/end.ejs') %></form>
