@@ -62,6 +62,10 @@ function register(req, res) {
   }
 }
 
+function nosotros(req, res) {
+    res.render("login/nosotros");
+}
+
 function storeUser(req, res) {
   const data = req.body;
   bcrypt.hash(data.password, 12).then((hash) => {
@@ -173,6 +177,8 @@ function borrarVehiculo(req, res, id) {
   });
 }
 
+
+
 module.exports = {
   login,
   register,
@@ -186,4 +192,5 @@ module.exports = {
   consultarVehiculos,
   editarVehiculo,
   borrarVehiculo,
+  nosotros,
 };
